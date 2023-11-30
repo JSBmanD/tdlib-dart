@@ -75,6 +75,8 @@ class JsonBindings {
       return 'tdjson.dll';
     } else if (Platform.isLinux) {
       return 'libtdjson.so';
+    } else if (Platform.isMacOS) {
+      return 'libtdjson.dylib';
     }
     throw UnsupportedError('Unsupported for current platform');
   }
@@ -83,7 +85,7 @@ class JsonBindings {
       '${Platform.isAndroid ? '_' : ''}td_json_client_$name';
 
   ffi.DynamicLibrary _openLib() {
-    if (Platform.isMacOS || Platform.isIOS) {
+    if (Platform.isIOS) {
       return ffi.DynamicLibrary.process();
     }
     return ffi.DynamicLibrary.open(_resolveLibName());
